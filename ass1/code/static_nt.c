@@ -4,13 +4,13 @@ int main()
 {
     FILE *file;
     file = fopen("../traces/trace_01","r");
-    char buff[255];
+    char buff[13];
     char ch;
     int i = 0;
     int taken = 0;
     while (fgetc(file) != EOF)
     {
-        fgets(buff,255,file);
+        fgets(buff,13,file);
         if(buff[8] == 48)//buff[8] = taken/not taken of branch address
             taken++;
         i++;

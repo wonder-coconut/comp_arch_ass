@@ -41,32 +41,46 @@ branch_node* search(branch_node *start, int addr)
 
 int main()
 {
-    int arr[] = {1,2,3,4,5,9,8,7,6};
-    int len = sizeof(arr)/sizeof(arr[0]);
-    branch_node *start;
-    branch_node *current;
-    for (int i = 0; i < len; i++)
+    FILE *file;
+    file = fopen("../traces/trace_01","r");
+    int i, j, addr, taken, predicted_taken;
+    i = j = addr = taken = predicted_taken = 0;
+    branch_node *start = (branch_node *) malloc (sizeof(branch_node));
+    branch_node *current = (branch_node *) malloc (sizeof(branch_node));
+    branch_node *temp = (branch_node *) malloc (sizeof(branch_node));
+
+    while (fgetc(file) != EOF)
     {
+        fscanf(file,"%x %d",&addr, &taken);
         if(i == 0)
         {
-            start = createlist(arr[i],0);
+            start = createlist(addr, taken);
             current = start;
         }
         else
-            current = push(current, arr[i], 0);
+        {
+            temp = search(start,addr);
+            if (temp == NULL)
+            {
+                current = push(current, addr, taken);
+
+                //printf("new entry: %x\t%d\n", current->addr, current->taken);
+            }
+            else
+            {
+                //printf("%d duplicate, updating\n", i);
+                temp->taken = taken;
+            }
+        }
+        i++;
     }
     current = start;
+    i=0;
+    fclose(file);
     while (current != NULL)
     {
-        printf("%d %d\n",current->addr, current->taken);
+        //printf("%d. %x\t%d\n",i++,current->addr,current->taken);
         current = current->next;
     }
-
-    current = search(start,1);
-    if(current == NULL)
-        printf("not found\n");
-    else
-    {
-        printf("found %d\n",current->addr);
-    }
+    
 }
