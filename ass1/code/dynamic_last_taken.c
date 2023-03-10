@@ -42,21 +42,21 @@ branch_node* search(branch_node *start, int addr)// linear search to look for a 
 int main()
 {
     FILE *file;
-    file = fopen("../traces/trace_01","r");
+    file = fopen("../traces/trace_01_test","r");
 
-    int i, j, addr, taken, predicted_taken, total_taken;
-    i = j = addr = taken = predicted_taken = total_taken = 0;
+    int i, j, addr, taken, prediction, total_correct_pred, default_state;
+    i = j = addr = taken = prediction = total_correct_pred = 0;
+    default_state = 1;
     
     branch_node *start = (branch_node *) malloc (sizeof(branch_node));
     branch_node *current = (branch_node *) malloc (sizeof(branch_node));
     branch_node *temp = (branch_node *) malloc (sizeof(branch_node));
 
-    while (fgetc(file) != EOF)
+    while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
-        fscanf(file,"%x %d",&addr, &taken);
         if(i == 0)//initial node
         {
-            predicted_taken = 1;//default state for new trace address
+            prediction = default_state;//default state for new trace address
             start = createlist(addr, taken);
             current = start;
         }
@@ -65,25 +65,33 @@ int main()
             temp = search(start,addr);
             if (temp == NULL)
             {
-                predicted_taken = 1;//default state for new trace address
+                prediction = default_state;//default state for new trace address
                 current = push(current, addr, taken);
             }
             else //trace node found in list
             {
                 /*prediction is taken as the <taken> state of the node found in the list
                 i.e. the previous taken state of the trace address*/
-                predicted_taken = temp->taken;
+                prediction = temp->taken;
                 temp->taken = taken; //trace node <taken> state is updated to current 
             }
         }
-        if(predicted_taken == taken)
-            total_taken++;
-        //printf("%d : %d - %d - %d - %x\n",i, predicted_taken,taken, total_taken, addr);
+        if(prediction == taken)
+            total_correct_pred++;
+        //printf("%d : %d - %d - %d - %x\n",i, prediction,taken, total_correct_pred, addr);
         i++;
     }
 
+    current = start;
+    j = 0;
     fclose(file);
-    printf("Success:\t%d\n",total_taken);
+    while (current != NULL)
+    {
+        printf("%d|\t%x\n",j++,current->addr);
+        current = current->next;
+    }
+    
+    printf("Success:\t%d\n",total_correct_pred);
     printf("Total:\t\t%d\n",i);
-    printf("Accuracy:\t%f\n",(total_taken*1.0/i));
+    printf("Accuracy:\t%f\n",(total_correct_pred*1.0/i));
 }
