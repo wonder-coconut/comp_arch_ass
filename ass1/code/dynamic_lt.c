@@ -27,7 +27,7 @@ branch_node* push(branch_node *current, int addr, int taken)
     return new_node;
 }
 
-branch_node* search(branch_node *start, int addr)// linear search to look for a matching address in a linked list
+branch_node* list_search(branch_node *start, int addr)// linear search to look for a matching address in a linked list
 {
     branch_node *current = start;
     while (current != NULL)
@@ -39,10 +39,10 @@ branch_node* search(branch_node *start, int addr)// linear search to look for a 
     return NULL;
 }
 
-int main()
+int dynamic_lt(char filepath[])
 {
     FILE *file;
-    file = fopen("../traces/trace_01_test","r");
+    file = fopen(filepath,"r");
 
     int i, j, addr, taken, prediction, total_correct_pred, default_state;
     i = j = addr = taken = prediction = total_correct_pred = 0;
@@ -62,7 +62,7 @@ int main()
         }
         else
         {
-            temp = search(start,addr);
+            temp = list_search(start,addr);
             if (temp == NULL)
             {
                 prediction = default_state;//default state for new trace address
@@ -78,18 +78,9 @@ int main()
         }
         if(prediction == taken)
             total_correct_pred++;
-        //printf("%d : %d - %d - %d - %x\n",i, prediction,taken, total_correct_pred, addr);
         i++;
     }
-
-    current = start;
-    j = 0;
     fclose(file);
-    while (current != NULL)
-    {
-        printf("%d|\t%x\n",j++,current->addr);
-        current = current->next;
-    }
     
     printf("Success:\t%d\n",total_correct_pred);
     printf("Total:\t\t%d\n",i);

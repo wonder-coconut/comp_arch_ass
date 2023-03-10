@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-int main()
+int static_t(char filepath[])
 {
     FILE *file;
-    file = fopen("../traces/trace_01","r");
+    file = fopen(filepath,"r");
     char buff[13];
     char ch;
     int i = 0;
