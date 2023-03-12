@@ -13,8 +13,8 @@ int dynamic_bm(char filepath[], int n)
     file = fopen(filepath,"r");
 
     unsigned int addr, lsb_addr;
-    int taken, i, j, top_index, total_correct_pred, default_state, prediction;
-    addr = lsb_addr = taken = i = j = top_index = total_correct_pred = 0;
+    int taken, i, total_correct_pred, default_state, prediction;
+    addr = lsb_addr = taken = i = total_correct_pred = prediction = 0;
     default_state = 1;
     int arr_size = (int)pow(2,n);//2^n unique counters
     int *arr = (int *) malloc(arr_size * sizeof(int));
