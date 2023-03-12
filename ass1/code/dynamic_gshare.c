@@ -22,27 +22,25 @@ int dynamic_bm(char filepath[], int n)
         arr[i] = default_state;
     
     i = 0;
-    printf("count\t|addr\tstate\tprediction\tactual\tsuccess\n");
 
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
         lsb_addr = (addr<<(32-n))>>(32-n); //least significant n bits //using 32 as int is 32bits
-
+        
         //prediction
         if(arr[lsb_addr] > 1) //2-3 (taken)
             prediction = 1;
         else //0-1 (taken)
             prediction = 0;
         
-        if(prediction == taken)
-            total_correct_pred++;
-
         //updation
         if(taken == 1)
             arr[lsb_addr] = (++arr[lsb_addr] > 3)? 3 : arr[lsb_addr]; //saturated increment
         else
-            arr[lsb_addr] = (--arr[lsb_addr] < 0)? 0 : arr[lsb_addr]; //unsaturated increment
+            arr[lsb_addr] = (--arr[lsb_addr] < 3)? 0 : arr[lsb_addr]; //unsaturated increment
 
+        if(prediction == taken)
+            total_correct_pred++;
         i++;
     }
 
