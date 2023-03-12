@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 int static_nt(char filepath[])
 {
@@ -8,6 +9,8 @@ int static_nt(char filepath[])
     char ch;
     int i = 0;
     int taken = 0;
+    clock_t t;
+    t = clock();
     while (fgetc(file) != EOF)
     {
         fgets(buff,13,file);
@@ -15,8 +18,12 @@ int static_nt(char filepath[])
             taken++;
         i++;
     }
+    t = clock() - t;
     fclose(file);
+
     printf("Success:\t%d\n",taken);
     printf("Total:\t\t%d\n",i);
     printf("Accuracy:\t%f\n",(taken*1.0/i));
+    printf("Clock ticks:\t%ld\n",t);
+    printf("Time:\t\t%f\n",((double)t/CLOCKS_PER_SEC));
 }

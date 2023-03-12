@@ -5,7 +5,7 @@ OBJECTS = main.o
 main.o :
 	$(CC) -c main.c
 
-branch_predictor :	$(OBJECTS)
+branch_predictor :	clean $(OBJECTS)
 	$(CC) $(OBJECTS) -o branch_predictor.o $(LDFLAGS)
 
 clean :

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct branch_node
 {
@@ -52,6 +53,9 @@ int dynamic_lt(char filepath[])
     branch_node *current = (branch_node *) malloc (sizeof(branch_node));
     branch_node *temp = (branch_node *) malloc (sizeof(branch_node));
 
+    clock_t t;
+    t = clock();
+
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
         if(i == 0)//initial node
@@ -80,9 +84,12 @@ int dynamic_lt(char filepath[])
             total_correct_pred++;
         i++;
     }
+    t = clock() - t;
     fclose(file);
     
     printf("Success:\t%d\n",total_correct_pred);
     printf("Total:\t\t%d\n",i);
     printf("Accuracy:\t%f\n",(total_correct_pred*1.0/i));
+    printf("Clock ticks:\t%ld\n",t);
+    printf("Time:\t\t%f\n",((double)t/CLOCKS_PER_SEC));
 }

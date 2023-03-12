@@ -16,11 +16,16 @@ int dynamic_gshare(char filepath[], int n, int h)
     int taken, i, total_correct_pred, default_state, prediction;
     addr = lsb_addr = history = index = taken = i = total_correct_pred = prediction = 0;
     default_state = 1;
+
     int arr_size = (int)pow(2,n);//2^n unique counters
     int *arr = (int *) malloc(arr_size * sizeof(int));
+    
     for (i = 0; i < arr_size; i++)
         arr[i] = default_state;
     i = 0;
+
+    clock_t t;
+    t = clock();
 
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
@@ -49,10 +54,12 @@ int dynamic_gshare(char filepath[], int n, int h)
 
         i++;
     }
-
+    t = clock() - t;
     fclose(file);
 
     printf("Success:\t%d\n",total_correct_pred);
     printf("Total:\t\t%d\n",i);
     printf("Accuracy:\t%f\n",(total_correct_pred*1.0/i));
+    printf("Clock ticks:\t%ld\n",t);
+    printf("Time:\t\t%f\n",((double)t/CLOCKS_PER_SEC));
 }
