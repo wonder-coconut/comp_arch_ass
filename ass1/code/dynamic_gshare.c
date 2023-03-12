@@ -20,7 +20,6 @@ int dynamic_gshare(char filepath[], int n, int h)
     int *arr = (int *) malloc(arr_size * sizeof(int));
     for (i = 0; i < arr_size; i++)
         arr[i] = default_state;
-    unsigned int max;
     i = 0;
 
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
@@ -44,6 +43,8 @@ int dynamic_gshare(char filepath[], int n, int h)
             arr[index] = (--arr[index] < 0)? 0 : arr[index]; //unsaturated increment
 
         history = (((history << 1) + taken)<< (32-h)) >> (32-h); //shift to add taken, then truncate to h bits
+        if(h == 0)//range of shift is limited to 0-31 for uint
+            history = 0;
    
 
         i++;

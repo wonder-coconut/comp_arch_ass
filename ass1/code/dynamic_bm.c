@@ -22,7 +22,6 @@ int dynamic_bm(char filepath[], int n)
         arr[i] = default_state;
     
     i = 0;
-    printf("count\t|addr\tstate\tprediction\tactual\tsuccess\n");
 
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
