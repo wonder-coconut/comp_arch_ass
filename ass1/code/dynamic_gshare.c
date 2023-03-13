@@ -30,7 +30,7 @@ int dynamic_gshare(char filepath[], int n, int h)
     while (fscanf(file,"%x %d",&addr, &taken) != EOF)
     {
         lsb_addr = (addr<<(32-n))>>(32-n); //least significant n bits //using 32 as int is 32bits
-        index = lsb_addr ^ history;
+        index = lsb_addr ^ history; //xor
         
         //prediction
         if(arr[index] > 1) //2-3 (taken)

@@ -2,7 +2,7 @@
 
 make branch_predictor;
 counter=1;
-rm out;
+rm -rf out;
 touch out;
 while [ $counter -le 16 ]
 do
@@ -18,3 +18,4 @@ do
 done
 
 make clean;
+
