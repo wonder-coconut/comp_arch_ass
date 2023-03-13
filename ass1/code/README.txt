@@ -10,6 +10,7 @@ The n and h bit limits depend on which predictor is chosen:
 - n is mandatory for dynamic_lt and dynamic_gshare
 - h is mandatory for dynamic_gshare
 
-Alternatively, you can also use the exec.sh bash script to run all traces for a defined predictor.
+Alternatively, you can also use the exec.sh bash script to run all traces for a defined predictor, although this is not recommended.
 It uses identical command line arguments.
-Note: the relative path between the scripts and the traces are hardcoded and must be in an identically placed folder to run.
+Note: the relative path between the scripts and the traces are hardcoded and must be in an identically placed folder to run 
+(relative to directory code/: ../traces/trace_<trace number>)
