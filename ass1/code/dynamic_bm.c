@@ -5,7 +5,7 @@
 
 int dynamic_bm(char filepath[], int n)
 {
-    if(n == 0 || n >= 30)
+    if(n == 0 || n > 31)
     {
         printf("invalid n value\n");
         return 0;
@@ -18,7 +18,7 @@ int dynamic_bm(char filepath[], int n)
     addr = lsb_addr = taken = i = total_correct_pred = prediction = 0;
     default_state = 1;
 
-    int arr_size = (int)pow(2,n);//2^n unique counters
+    unsigned int arr_size = (int)pow(2,n);//2^n unique counters
     int *arr = (int *) malloc(arr_size * sizeof(int));
     
     for (i = 0; i < arr_size; i++)

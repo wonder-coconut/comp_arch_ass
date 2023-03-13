@@ -4,7 +4,7 @@
 
 int dynamic_gshare(char filepath[], int n, int h)
 {
-    if(n == 0 || n >= 30 || h > n)
+    if(n == 0 || n > 31 || h > n)
     {
         printf("invalid n value\n");
         return 0;
@@ -17,7 +17,7 @@ int dynamic_gshare(char filepath[], int n, int h)
     addr = lsb_addr = history = index = taken = i = total_correct_pred = prediction = 0;
     default_state = 1;
 
-    int arr_size = (int)pow(2,n);//2^n unique counters
+    unsigned int arr_size = (int)pow(2,n);//2^n unique counters
     int *arr = (int *) malloc(arr_size * sizeof(int));
     
     for (i = 0; i < arr_size; i++)
